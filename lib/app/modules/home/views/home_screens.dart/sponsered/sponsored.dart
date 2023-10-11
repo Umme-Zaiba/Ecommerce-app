@@ -1,41 +1,44 @@
+import 'package:eapp/app/components/Product.dart';
 import 'package:eapp/app/modules/product_details/views/product_details_view.dart';
-import 'package:eapp/app/routes/app_pages.dart';
+import 'package:eapp/app/modules/useraccount/views/account_screens/wishlist/wishlist_body.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SponsoredProducts extends StatefulWidget {
   const SponsoredProducts({Key? key});
-
   @override
   State<SponsoredProducts> createState() => _SponsoredProductsState();
 }
-class Product {
-  final String image;
-  final String title;
-  final String description;
-  final String price;
 
-  Product(
-      {required this.image,
-      required this.title,
-      required this.description,
-      required this.price});
-}
 class _SponsoredProductsState extends State<SponsoredProducts> {
   List<Product> sponsoredProducts = [
     Product(
       image: 'assets/images/ps4_console_white_1.png',
       title: 'Logitech Head',
-      description: 'The brand new headset with a long-lasting battery',
-      price: 'INR 55',
+      description: 'The brand new headset',
+      price: '5500',
     ),
     Product(
       image: 'assets/images/book4.jpeg',
-      title: 'Harry potter',
-      description: 'High-quality sound for your music and calls',
-      price: 'INR 40',
+      title: 'Harry Potter series',
+      description: 'Harry Potter and the Half-Blood Prince',
+      price: '4000',
+    ),
+    Product(
+      image: 'assets/images/hoodie.jpeg',
+      title: 'PUMA Hoodie',
+      description: 'Comfortable and natural wear',
+      price: '3000',
+    ),
+    Product(
+      image: 'assets/images/olay.jpeg',
+      title: 'Olay Naturals',
+      description: 'Apply it with pride!',
+      price: '2000',
     ),
   ];
+
+  List<Product> wishlist = [];
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +60,11 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
           shrinkWrap: true,
           itemCount: sponsoredProducts.length,
           itemBuilder: (context, index) {
+            final product = sponsoredProducts[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => ProductDetailsView(), arguments: sponsoredProducts[index]); // Navigate to product details screen
+                Get.to(() => ProductDetailsView(
+                    product: sponsoredProducts[index]));
               },
               child: Container(
                 padding: EdgeInsets.only(left: 15, right: 15, top: 10),
@@ -80,7 +85,7 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            "-50%",
+                            "-10%",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey[700],
@@ -88,16 +93,21 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
                             ),
                           ),
                         ),
-                        Icon(
-                          Icons.favorite_border,
-                          color: Colors.red,
+                        IconButton(
+                          icon: wishlist.contains(product)
+                              ? Icon(Icons.favorite, color: Colors.red)
+                              : Icon(Icons.favorite_border, color: Colors.red),
+                          onPressed: () {
+                            toggleWishlist(product);
+                            Get.to(WishlistPage(wishlistItems: wishlist));
+                          },
                         ),
                       ],
                     ),
                     Container(
                       margin: EdgeInsets.all(10),
                       child: Image.asset(
-                        sponsoredProducts[index].image,
+                        product.image,
                         height: 100,
                         width: 100,
                       ),
@@ -106,7 +116,7 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
                       padding: EdgeInsets.only(bottom: 8),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        sponsoredProducts[index].title,
+                        product.title,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -116,7 +126,7 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
                     ),
                     Container(
                       child: Text(
-                        sponsoredProducts[index].description,
+                        product.description,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
@@ -129,17 +139,17 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            sponsoredProducts[index].price,
+                            product.price,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
                             ),
                           ),
-                          Icon(
-                            Icons.shopping_cart_checkout,
-                            color: Colors.grey[700],
-                          ),
+                          // Icon(
+                          //   Icons.shopping_cart_checkout,
+                          //   color: Colors.grey[700],
+                          // ),
                         ],
                       ),
                     )
@@ -151,5 +161,17 @@ class _SponsoredProductsState extends State<SponsoredProducts> {
         ),
       ],
     );
+  }
+
+  void toggleWishlist(Product product) {
+    if (wishlist.contains(product)) {
+      setState(() {
+        wishlist.remove(product);
+      });
+    } else {
+      setState(() {
+        wishlist.add(product);
+      });
+    }
   }
 }

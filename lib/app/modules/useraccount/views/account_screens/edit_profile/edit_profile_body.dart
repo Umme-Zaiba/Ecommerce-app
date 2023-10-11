@@ -23,7 +23,9 @@ class _EditProfileState extends State<EditProfile> {
       highlightColor: const Color.fromARGB(255, 251, 248, 237),
       child: ListTile(
         leading: Icon(Icons.person, color: const Color.fromARGB(255, 239, 168, 154)),
-        title: Text('Edit Profile'),
+        title: Text('Edit Profile',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

@@ -23,7 +23,7 @@ class _CouponsState extends State<Coupons> {
       highlightColor: const Color.fromARGB(255, 251, 248, 237),
       child: ListTile(
         leading: Icon(Icons.local_offer,color: const Color.fromARGB(255, 239, 168, 154)),
-        title: Text('Coupons'),
+        title: Text('Coupons', style: TextStyle(fontSize: 18),),
       ),
     );
   }

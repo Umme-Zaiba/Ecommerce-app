@@ -23,7 +23,7 @@ class _OrdersState extends State<Orders> {
       highlightColor: const Color.fromARGB(255, 251, 248, 237),
       child: ListTile(
         leading: Icon(Icons.check_box,color: const Color.fromARGB(255, 239, 168, 154)),
-        title: Text('Orders'),
+        title: Text('Orders', style: TextStyle(fontSize: 18),),
       ),
     );
   }
